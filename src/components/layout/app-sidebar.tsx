@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ClipboardList,
-  GraduationCap,
-  SquarePen,
-} from "lucide-react";
+import { ClipboardList, GraduationCap, SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,7 +24,7 @@ export function AppSidebar() {
   const emitirActive = pathname === "/laudos/novo";
 
   return (
-    <aside className="hidden w-[300px] shrink-0 border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] lg:flex lg:flex-col">
+    <aside className="hidden h-screen w-[300px] shrink-0 self-start overflow-y-auto border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] lg:sticky lg:top-0 lg:flex lg:flex-col">
       <div className="px-6 py-6">
         <div className="appear-fade flex h-[88px] items-center rounded-[28px] px-2 shadow-none">
           <Image
@@ -122,7 +118,7 @@ export function AppSidebar() {
                   <p>{capacitacaoItem.label}</p>
                 </div>
                 <p className="mt-1 text-sm font-medium normal-case tracking-normal text-slate-400">
-                  Em breve no mesmo padrão visual do restante do sistema.
+                  Em desenvolvimento.
                 </p>
               </div>
             </div>
