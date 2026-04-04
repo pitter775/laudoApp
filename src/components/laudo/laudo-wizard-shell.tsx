@@ -336,11 +336,6 @@ export function LaudoWizardShell() {
       return;
     }
 
-    const pdfWindow =
-      typeof window !== "undefined"
-        ? window.open("", "_blank", "noopener,noreferrer")
-        : null;
-
     setError(null);
     setIsSubmitting(true);
 
@@ -361,15 +356,8 @@ export function LaudoWizardShell() {
       });
 
       const pdfUrl = `/laudos/${laudoId}/pdf`;
-
-      if (pdfWindow) {
-        pdfWindow.location.href = pdfUrl;
-        pdfWindow.focus();
-      } else {
-        router.push(pdfUrl);
-      }
+      router.push(pdfUrl);
     } catch (submitError) {
-      pdfWindow?.close();
       setError(
         submitError instanceof Error
           ? submitError.message

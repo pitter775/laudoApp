@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import QRCode from "qrcode";
 
 import { laudosService, pdfService } from "@/services";
@@ -21,6 +22,7 @@ type LaudoPdfPageShellProps = {
 };
 
 export function LaudoPdfPageShell({ id }: LaudoPdfPageShellProps) {
+  const router = useRouter();
   const hasTriggeredPrintRef = useRef(false);
   const [laudo, setLaudo] = useState<LaudoDetalhe | null>(null);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState("");
@@ -118,6 +120,15 @@ export function LaudoPdfPageShell({ id }: LaudoPdfPageShellProps) {
     };
   }, [laudo, qrCodeDataUrl]);
 
+  function handleBackToWizard() {
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push("/laudos/novo");
+  }
+
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-100 px-6 py-10">
@@ -167,13 +178,14 @@ export function LaudoPdfPageShell({ id }: LaudoPdfPageShellProps) {
           <FilePlus2 className="h-4 w-4" />
           Novo laudo
         </Link>
-        <Link
-          href="/laudos"
+        <button
+          type="button"
+          onClick={handleBackToWizard}
           className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar
-        </Link>
+        </button>
         <button
           type="button"
           onClick={() => window.print()}

@@ -163,8 +163,6 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
 
               <Link
                 href={`/laudos/${laudo.id}/pdf`}
-                target="_blank"
-                rel="noreferrer"
                 className="premium-button inline-flex items-center gap-2 rounded-2xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-hover"
               >
                 <FileText className="h-4 w-4" />
