@@ -1,14 +1,21 @@
 "use client";
 
-import { ClipboardList, GraduationCap, SquarePen } from "lucide-react";
+import { ClipboardList, GraduationCap, SquarePen, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
 
 import { appNavigation } from "@/lib/navigation";
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  isOpen?: boolean;
+  onClose?: () => void;
+};
+
+export function AppSidebar({
+  isOpen = false,
+  onClose = () => {},
+}: AppSidebarProps) {
   const pathname = usePathname();
   const laudosItem = appNavigation.find((item) => item.href === "/laudos");
   const emitirItem = appNavigation.find((item) => item.href === "/laudos/novo");
@@ -24,8 +31,22 @@ export function AppSidebar() {
   const emitirActive = pathname === "/laudos/novo";
 
   return (
-    <aside className="hidden h-screen w-[300px] shrink-0 self-start overflow-y-auto border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] lg:sticky lg:top-0 lg:flex lg:flex-col">
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 flex w-[300px] shrink-0 flex-col overflow-y-auto border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] transition-transform duration-200 ease-out ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0`}
+    >
       <div className="px-6 py-6">
+        <div className="mb-3 flex items-center justify-end lg:hidden">
+          <button
+            type="button"
+            onClick={onClose}
+            className="premium-pill inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
         <div className="appear-fade flex h-[88px] items-center rounded-[28px] px-2 shadow-none">
           <Image
             src="/logo_completo.png"
@@ -49,6 +70,7 @@ export function AppSidebar() {
           >
             <Link
               href={laudosItem.href}
+              onClick={onClose}
               className={`group block rounded-[22px] px-4 py-4 transition premium-button-secondary ${
                 pathname === "/laudos"
                   ? "premium-pill border border-white/90 bg-white text-slate-950"
@@ -77,6 +99,7 @@ export function AppSidebar() {
             {emitirItem ? (
               <Link
                 href={emitirItem.href}
+                onClick={onClose}
                 className={`group mt-2 block rounded-[20px] px-6 py-4 text-[14px] font-bold uppercase tracking-wide transition premium-button-secondary ${
                   emitirActive
                     ? "premium-pill border border-white/90 bg-white text-primary"
@@ -126,79 +149,5 @@ export function AppSidebar() {
         ) : null}
       </nav>
     </aside>
-  );
-}
-
-export function AppMobileNav() {
-  const pathname = usePathname();
-  const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-
-  useEffect(() => {
-    const activeItem =
-      appNavigation.find((item) => {
-        if (item.href === "/laudos") {
-          return pathname === "/laudos" || pathname.startsWith("/laudos/");
-        }
-
-        return pathname === item.href;
-      }) ?? appNavigation[0];
-
-    const element = itemRefs.current[activeItem.href];
-    if (!element) {
-      return;
-    }
-
-    element.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }, [pathname]);
-
-  return (
-    <div className="border-b border-slate-200/80 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
-      <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <nav className="flex min-w-max items-center gap-2">
-          {appNavigation.map((item) => {
-            const isLaudosGroup =
-              item.href === "/laudos" &&
-              (pathname === "/laudos" || pathname.startsWith("/laudos/"));
-            const isActive = isLaudosGroup || pathname === item.href;
-            const Icon =
-              item.href === "/laudos"
-                ? ClipboardList
-                : item.href === "/laudos/novo"
-                  ? SquarePen
-                  : GraduationCap;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.disabled ? "#" : item.href}
-                ref={(element) => {
-                  itemRefs.current[item.href] = element;
-                }}
-                aria-disabled={item.disabled}
-                className={`premium-button-secondary inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
-                  isActive
-                    ? "border-primary/20 bg-primary-soft text-primary shadow-[0_10px_24px_rgba(34,211,197,0.18)]"
-                    : item.disabled
-                      ? "border-slate-200 bg-white text-slate-400"
-                      : "border-slate-200 bg-white text-slate-600"
-                }`}
-                onClick={(event) => {
-                  if (item.disabled) {
-                    event.preventDefault();
-                  }
-                }}
-              >
-                <Icon className="h-4 w-4" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </div>
   );
 }

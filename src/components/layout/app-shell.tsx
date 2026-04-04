@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { AppHeader } from "@/components/layout/app-header";
-import { AppMobileNav, AppSidebar } from "@/components/layout/app-sidebar";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import { authService } from "@/services";
 import type { UsuarioSessao } from "@/types/laudo";
 
@@ -18,6 +18,7 @@ export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [user, setUser] = useState<UsuarioSessao | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,6 +55,10 @@ export function AppShell({ children }: AppShellProps) {
     };
   }, [pathname, router]);
 
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [pathname]);
+
   if (isLoading || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#fbfcff] px-6">
@@ -71,12 +76,23 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="min-h-screen bg-[#fbfcff] text-slate-950">
+      {isSidebarOpen ? (
+        <button
+          type="button"
+          aria-label="Fechar menu"
+          className="fixed inset-0 z-30 bg-slate-950/35 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      ) : null}
+
       <div className="mx-auto flex min-h-screen max-w-[1600px]">
-        <AppSidebar />
+        <AppSidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
 
         <div className="flex min-h-screen flex-1 flex-col">
-          <AppHeader user={user} />
-          <AppMobileNav />
+          <AppHeader user={user} onOpenMenu={() => setIsSidebarOpen(true)} />
           <main className="flex-1 px-6 py-4 md:px-10 md:py-6">
             <div className="mx-auto w-full max-w-[1180px]">{children}</div>
           </main>

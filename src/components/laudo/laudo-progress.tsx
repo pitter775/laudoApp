@@ -87,12 +87,27 @@ export function LaudoProgress({
     };
   }, [currentStep, steps]);
 
+  useEffect(() => {
+    const activeItem = itemRefs.current[currentStep];
+
+    if (!activeItem) {
+      return;
+    }
+
+    activeItem.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [currentStep]);
+
   return (
     <div className="border-b border-slate-100 pb-4">
-      <div
-        ref={containerRef}
-        className="relative flex flex-wrap items-center justify-center gap-5"
-      >
+      <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          ref={containerRef}
+          className="relative flex min-w-max items-center justify-start gap-5 px-1 md:justify-center"
+        >
         {steps.map((step, index) => {
           const isActive = index === currentStep;
           const isCompleted = index < currentStep;
@@ -155,6 +170,7 @@ export function LaudoProgress({
             }}
           />
         ) : null}
+        </div>
       </div>
     </div>
   );
