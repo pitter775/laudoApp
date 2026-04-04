@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -10,10 +9,9 @@ import type { UsuarioSessao } from "@/types/laudo";
 
 type AppHeaderProps = {
   user: UsuarioSessao;
-  onOpenMenu: () => void;
 };
 
-export function AppHeader({ user, onOpenMenu }: AppHeaderProps) {
+export function AppHeader({ user }: AppHeaderProps) {
   const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
@@ -35,13 +33,6 @@ export function AppHeader({ user, onOpenMenu }: AppHeaderProps) {
     <header className="sticky top-0 z-10 bg-white/95 px-6 py-3 backdrop-blur md:px-10">
       <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 appear-fade">
-          <button
-            type="button"
-            onClick={onOpenMenu}
-            className="premium-pill inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden"
-          >
-            <Menu className="h-4 w-4" />
-          </button>
           <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/15 bg-white shadow-[0_12px_28px_rgba(0,194,184,0.1)]">
             <Image
               src="/logo_curto.png"
