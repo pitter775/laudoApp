@@ -541,7 +541,7 @@ export function LaudoWizardShell() {
 
       <div
         ref={wizardPanelRef}
-        className="premium-panel appear-fade-delay overflow-visible rounded-[22px] border border-slate-200 bg-white px-4 py-8 md:px-8 md:py-10"
+        className="premium-panel appear-fade-delay -mx-4 overflow-visible border-y border-slate-200 bg-white px-4 py-8 sm:mx-0 sm:rounded-[22px] sm:border sm:px-5 md:px-8 md:py-10"
       >
         <div className="mx-auto max-w-[760px]">
           <div ref={progressAnchorRef} className="relative">
