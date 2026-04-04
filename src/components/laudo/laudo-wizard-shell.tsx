@@ -516,7 +516,10 @@ export function LaudoWizardShell() {
               Meus Laudos &gt; Emitir novo laudo
             </p>
             <h1 className="mt-2 text-[26px] font-black uppercase tracking-tight text-slate-900">
+              <span className="sm:hidden">Novo laudo</span>
+              <span className="hidden sm:inline">
               Emissão de novo laudo
+              </span>
             </h1>
           </div>
         </div>

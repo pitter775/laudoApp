@@ -48,7 +48,7 @@ export function DevHelperPanel() {
 
   return (
     <aside
-      className={`fixed top-0 right-0 z-50 h-screen w-[320px] border-l border-slate-200/80 bg-white/80 shadow-[0_12px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 right-0 z-50 hidden h-screen w-[320px] border-l border-slate-200/80 bg-white/80 shadow-[0_12px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-transform duration-300 ease-in-out md:block ${
         isOpen ? "translate-x-0" : "translate-x-[280px]"
       }`}
       aria-label="Painel de ajuda para desenvolvimento"
