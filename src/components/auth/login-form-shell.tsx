@@ -50,7 +50,7 @@ export function LoginFormShell() {
     <div className="space-y-6 appear-fade">
       <PageIntro
         eyebrow="Acesso seguro"
-        title="Acesse sua conta"
+        title="Entrar"
         description="Entre com seus dados para continuar a emissao e a gestao dos laudos."
         icon={LockKeyhole}
       />
@@ -66,7 +66,7 @@ export function LoginFormShell() {
             width={108}
             height={108}
             priority
-            className="h-auto w-[88px] md:w-[96px]"
+            className="h-auto w-[34px] md:w-[42px]"
           />
         </div>
 

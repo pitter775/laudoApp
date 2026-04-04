@@ -1,13 +1,21 @@
 "use client";
 
-import { ClipboardList, GraduationCap, SquarePen } from "lucide-react";
+import { ClipboardList, GraduationCap, SquarePen, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { appNavigation } from "@/lib/navigation";
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  isOpen?: boolean;
+  onClose?: () => void;
+};
+
+export function AppSidebar({
+  isOpen = false,
+  onClose = () => {},
+}: AppSidebarProps) {
   const pathname = usePathname();
   const laudosItem = appNavigation.find((item) => item.href === "/laudos");
   const emitirItem = appNavigation.find((item) => item.href === "/laudos/novo");
@@ -23,8 +31,21 @@ export function AppSidebar() {
   const emitirActive = pathname === "/laudos/novo";
 
   return (
-    <aside className="hidden w-[300px] shrink-0 border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] lg:flex lg:flex-col">
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 flex w-[300px] shrink-0 flex-col border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] transition-transform duration-200 ease-out lg:static lg:z-auto lg:translate-x-0 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } lg:flex`}
+    >
       <div className="px-6 py-6">
+        <div className="mb-3 flex items-center justify-end lg:hidden">
+          <button
+            type="button"
+            onClick={onClose}
+            className="premium-pill inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
         <div className="appear-fade flex h-[88px] items-center rounded-[28px] px-2 shadow-none">
           <Image
             src="/logo_completo.png"
@@ -48,6 +69,7 @@ export function AppSidebar() {
           >
             <Link
               href={laudosItem.href}
+              onClick={onClose}
               className={`group block rounded-[22px] px-4 py-4 transition premium-button-secondary ${
                 pathname === "/laudos"
                   ? "premium-pill border border-white/90 bg-white text-slate-950"
@@ -69,9 +91,6 @@ export function AppSidebar() {
                       {laudosItem.label}
                     </p>
                   </div>
-                  <p className="mt-1 text-sm leading-5 text-slate-500">
-                    {laudosItem.description}
-                  </p>
                 </div>
               </div>
             </Link>
@@ -79,6 +98,7 @@ export function AppSidebar() {
             {emitirItem ? (
               <Link
                 href={emitirItem.href}
+                onClick={onClose}
                 className={`group mt-2 block rounded-[20px] px-6 py-4 text-[14px] font-bold uppercase tracking-wide transition premium-button-secondary ${
                   emitirActive
                     ? "premium-pill border border-white/90 bg-white text-primary"

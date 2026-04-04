@@ -10,8 +10,8 @@ type AuthShellProps = {
 
 export function AuthShell({ children }: AuthShellProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(0,194,184,0.14),_#ffffff_48%),radial-gradient(circle_at_bottom_right,_rgba(106,0,244,0.12),_transparent_28%)] px-6 py-12">
-      <div className="premium-panel w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/70 bg-white">
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(0,194,184,0.14),_#ffffff_48%),radial-gradient(circle_at_bottom_right,_rgba(106,0,244,0.12),_transparent_28%)] px-0 py-0 sm:px-6 sm:py-12">
+      <div className="premium-panel w-full max-w-5xl overflow-hidden rounded-none border-0 bg-white sm:rounded-[32px] sm:border sm:border-white/70">
         <div className="grid min-h-[640px] lg:grid-cols-[1.2fr_0.8fr]">
           <section className="relative flex flex-col justify-between overflow-hidden bg-slate-950 px-8 py-10 text-slate-100 md:px-10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,194,184,0.18),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(106,0,244,0.22),_transparent_30%)]" />
@@ -26,7 +26,7 @@ export function AuthShell({ children }: AuthShellProps) {
                   className="h-auto w-[220px]"
                 />
               </Link>
-              <div className="relative space-y-3 appear-fade-delay">
+              <div className="relative space-y-4 appear-fade-delay">
                 <p className="text-sm uppercase tracking-[0.24em] text-primary">
                   Laudos tecnicos com fluxo controlado
                 </p>
@@ -41,7 +41,7 @@ export function AuthShell({ children }: AuthShellProps) {
               </div>
             </div>
 
-            <div className="relative grid gap-3 text-sm text-slate-300 sm:grid-cols-3">
+            <div className="relative mt-8 grid gap-3 text-sm text-slate-300 sm:grid-cols-3">
               <div className="premium-pill rounded-2xl border border-white/10 bg-white/5 p-4">
                 <Workflow className="h-5 w-5 text-primary" />
                 <p className="mt-3 font-semibold text-white">Fluxo guiado</p>
@@ -66,7 +66,7 @@ export function AuthShell({ children }: AuthShellProps) {
             </div>
           </section>
 
-          <section className="flex items-center bg-white px-6 py-8 md:px-10">
+          <section className="flex items-center bg-white px-4 py-8 sm:px-6 md:px-10">
             <div className="w-full">{children}</div>
           </section>
         </div>
