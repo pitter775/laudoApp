@@ -2,6 +2,7 @@
 
 import type { FormEvent } from "react";
 import { ArrowRight, LockKeyhole, Mail } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -58,8 +59,15 @@ export function LoginFormShell() {
         onSubmit={handleSubmit}
         className="premium-panel rounded-[28px] border border-slate-200 bg-white p-6"
       >
-        <div className="mb-5 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-          Acesso restrito a usuarios cadastrados.
+        <div className="mb-6 flex justify-center">
+          <Image
+            src="/logo_curto.png"
+            alt="Laudoparts"
+            width={108}
+            height={108}
+            priority
+            className="h-auto w-[88px] md:w-[96px]"
+          />
         </div>
 
         <div className="grid gap-4">

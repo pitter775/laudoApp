@@ -15,16 +15,45 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const appUrl =
+  process.env.NEXT_PUBLIC_APP_URL?.trim() || "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(appUrl),
   title: {
     default: "Laudoparts",
     template: "%s | Laudoparts",
   },
-  description: "Base estrutural do sistema Laudoparts construida com Next.js App Router.",
+  applicationName: "Laudoparts",
+  description:
+    "Sistema Laudoparts para emissao, consulta e compartilhamento de laudos tecnicos com visual profissional.",
   icons: {
-    icon: "/logo_curto.png",
-    shortcut: "/logo_curto.png",
-    apple: "/logo_curto.png",
+    icon: "/logo_icone.png",
+    shortcut: "/logo_icone.png",
+    apple: "/logo_icone.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "Laudoparts",
+    title: "Laudoparts",
+    description:
+      "Emita e acompanhe laudos tecnicos em um fluxo mais claro, organizado e profissional.",
+    images: [
+      {
+        url: "/logo_icone.png",
+        width: 512,
+        height: 512,
+        alt: "Icone Laudoparts",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Laudoparts",
+    description:
+      "Emita e acompanhe laudos tecnicos em um fluxo mais claro, organizado e profissional.",
+    images: ["/logo_icone.png"],
   },
 };
 

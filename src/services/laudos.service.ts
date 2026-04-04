@@ -1,3 +1,4 @@
+import { authService } from "@/services/auth.service";
 import { supabaseClient } from "@/lib/supabaseClient";
 import type {
   EmitirLaudoPayload,
@@ -13,11 +14,24 @@ export type CreateLaudoPayload = {
   pecaId: string;
 };
 
+async function getRequiredSession() {
+  const session = await authService.getSession();
+
+  if (!session) {
+    throw new Error("Sessao nao encontrada. Faca login novamente.");
+  }
+
+  return session;
+}
+
 export const laudosService = {
   async listByUser(): Promise<LaudoListItem[]> {
+    const session = await getRequiredSession();
+
     const { data, error } = await supabaseClient
       .from("laudos")
       .select("id, dados_cliente, dados_peca, status, created_at, pecas(nome)")
+      .eq("user_id", session.id)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -156,5 +170,48 @@ export const laudosService = {
     }
 
     return data as string;
+  },
+  async deleteAllByUser() {
+    const session = await getRequiredSession();
+
+    const { data: laudos, error: listError } = await supabaseClient
+      .from("laudos")
+      .select("id")
+      .eq("user_id", session.id);
+
+    if (listError) {
+      throw listError;
+    }
+
+    const laudoIds = (laudos ?? []).map((laudo) => laudo.id);
+
+    if (laudoIds.length === 0) {
+      return 0;
+    }
+
+    const [{ error: anexosError }, { error: itensError }] = await Promise.all([
+      supabaseClient.from("laudo_anexos").delete().in("laudo_id", laudoIds),
+      supabaseClient.from("laudo_itens").delete().in("laudo_id", laudoIds),
+    ]);
+
+    if (anexosError) {
+      throw anexosError;
+    }
+
+    if (itensError) {
+      throw itensError;
+    }
+
+    const { error: laudosError } = await supabaseClient
+      .from("laudos")
+      .delete()
+      .in("id", laudoIds)
+      .eq("user_id", session.id);
+
+    if (laudosError) {
+      throw laudosError;
+    }
+
+    return laudoIds.length;
   },
 };

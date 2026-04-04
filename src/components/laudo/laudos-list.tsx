@@ -7,13 +7,17 @@ import { useEffect, useState } from "react";
 import { laudosService, pdfService } from "@/services";
 import type { LaudoListItem } from "@/types/laudo";
 
+type LaudosListProps = {
+  refreshKey?: number;
+};
+
 function getStatusBadgeClass(status: LaudoListItem["status"]) {
   return status === "REPROVADO"
     ? "border-rose-200 bg-rose-50 text-rose-700"
     : "border-emerald-200 bg-emerald-50 text-emerald-700";
 }
 
-export function LaudosList() {
+export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
   const [laudos, setLaudos] = useState<LaudoListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +26,11 @@ export function LaudosList() {
     let isMounted = true;
 
     async function loadLaudos() {
+      if (isMounted) {
+        setIsLoading(true);
+        setError(null);
+      }
+
       try {
         const data = await laudosService.listByUser();
 
@@ -48,7 +57,7 @@ export function LaudosList() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [refreshKey]);
 
   if (isLoading) {
     return (
