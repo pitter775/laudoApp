@@ -206,7 +206,7 @@ export function LaudoWizardShell() {
       const headerHeight = headerElement instanceof HTMLElement
         ? headerElement.getBoundingClientRect().height
         : 0;
-      const pinnedTop = headerHeight + 2;
+      const pinnedTop = Math.max(headerHeight - 4, 0);
       const panelRect = wizardPanel.getBoundingClientRect();
       const anchorRect = progressAnchor.getBoundingClientRect();
       const shouldPin =
