@@ -259,7 +259,9 @@ export function AvaliacaoStepShell({
                 : "border-slate-200"
             }`}
           >
-            <p className="text-sm font-medium text-slate-800">{item.nome}</p>
+            <p className="min-w-0 break-words text-sm font-medium text-slate-800">
+              {item.nome}
+            </p>
             <div className="flex flex-wrap gap-2">
               {statusOptions.map((status) => {
                 const isActive = item.status === status;
@@ -282,20 +284,20 @@ export function AvaliacaoStepShell({
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-between gap-4">
+      <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="button"
           onClick={onBack}
-          className="premium-button-secondary inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-200"
+          className="premium-button-secondary inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-200 sm:w-auto"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar
         </button>
 
-        <div className="relative">
+        <div className="relative w-full overflow-hidden sm:w-auto sm:overflow-visible">
           <canvas
             ref={canvasRef}
-            className={`pointer-events-none absolute inset-x-[-42px] bottom-[calc(100%-50px)] z-10 mx-auto -translate-x-[50px] ${
+            className={`pointer-events-none absolute left-1/2 bottom-[calc(100%-50px)] z-10 hidden -translate-x-1/2 sm:block ${
               showCelebration ? "block" : "hidden"
             }`}
           />
@@ -303,7 +305,7 @@ export function AvaliacaoStepShell({
           <button
             type="button"
             onClick={onNext}
-            className={`premium-button inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition ${
+            className={`premium-button inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition sm:w-auto ${
               allApproved
                 ? "status-glow bg-emerald-500 hover:bg-emerald-600"
                 : "bg-primary hover:bg-primary-hover"
