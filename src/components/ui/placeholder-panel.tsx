@@ -28,12 +28,18 @@ export function PlaceholderPanel({
       </div>
 
       <ul className="mt-5 space-y-3">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
             key={item}
-            className="premium-pill rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700"
+            className="flex items-start gap-3 rounded-2xl px-1 py-1 text-sm text-slate-700"
           >
-            {item}
+            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" />
+            <div>
+              <p className="font-semibold text-slate-900">{item}</p>
+              <p className="mt-1 text-xs leading-5 text-slate-500">
+                Etapa {index + 1} desta área.
+              </p>
+            </div>
           </li>
         ))}
       </ul>

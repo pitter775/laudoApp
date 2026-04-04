@@ -43,7 +43,7 @@ export function LaudosPageShell() {
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Nao foi possivel remover os laudos.",
+          : "Não foi possível remover os laudos.",
       );
     } finally {
       setIsDeletingAll(false);
@@ -55,7 +55,7 @@ export function LaudosPageShell() {
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <PageIntro
           eyebrow="Laudos"
-          title="Gestao de laudos"
+          title="Gestão de laudos"
           description="Consulte, acompanhe e avance com mais controle sobre os laudos emitidos no sistema."
           icon={ClipboardList}
         />

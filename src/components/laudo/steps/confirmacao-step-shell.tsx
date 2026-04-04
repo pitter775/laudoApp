@@ -2,7 +2,6 @@ import {
   ArrowLeft,
   BadgeCheck,
   Camera,
-  CircleAlert,
   CircleCheckBig,
   ClipboardCheck,
   FileCheck2,
@@ -66,15 +65,15 @@ export function ConfirmacaoStepShell({
   const avaliadorCode = `001AIQ-${user.id.slice(0, 5).toUpperCase()}`;
   const pendingItems = aceite
     ? []
-    : ["Ativar a autorizacao final para liberar a emissao do laudo."];
+    : ["Ativar a autorização final para liberar a emissão do laudo."];
 
   return (
     <LaudoStepCard
-      title="Confirmacao"
-      description="Revise as informacoes antes de salvar o laudo, os itens e os anexos."
+      title="Confirmação"
+      description="Revise as informações antes de salvar o laudo, os itens e os anexos."
     >
-      <div className="grid gap-4 lg:grid-cols-2 appear-fade">
-        <div className="premium-pill rounded-2xl border border-slate-200 bg-slate-50 p-4">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5">
           <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
             <BadgeCheck className="h-4 w-4 text-primary" />
             Dados do cliente
@@ -87,30 +86,42 @@ export function ConfirmacaoStepShell({
           </div>
         </div>
 
-        <div className="premium-pill rounded-2xl border border-slate-200 bg-slate-50 p-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5">
           <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
             <FileCheck2 className="h-4 w-4 text-primary" />
-            Dados da peca
+            Dados da peça
           </p>
           <div className="mt-3 space-y-2 text-sm text-slate-600">
             <p>{pecaNome}</p>
             <p>{peca.modelo}</p>
             <p>{peca.identificacao}</p>
-            <p>{peca.observacao || "Sem observacoes."}</p>
+            <p>{peca.observacao || "Sem observações."}</p>
           </div>
         </div>
       </div>
 
-      <div className="premium-pill mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-        <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-          <ClipboardCheck className="h-4 w-4 text-primary" />
-          Avaliacao
-        </p>
-        <div className="mt-3 grid gap-2 text-sm text-slate-600">
+      <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="flex items-center justify-between gap-3">
+          <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <ClipboardCheck className="h-4 w-4 text-primary" />
+            Avaliação
+          </p>
+          <span
+            className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] ${
+              statusFinal === "REPROVADO"
+                ? "bg-rose-50 text-rose-700"
+                : "bg-emerald-50 text-emerald-700"
+            }`}
+          >
+            {statusFinal}
+          </span>
+        </div>
+
+        <div className="mt-4 grid gap-2 text-sm text-slate-600">
           {itens.map((item) => (
             <div
               key={item.analiseId}
-              className="flex items-center justify-between gap-4"
+              className="flex items-center justify-between gap-4 rounded-xl bg-slate-50 px-3 py-2.5"
             >
               <span>{item.nome}</span>
               <span className={getStatusChipClass(item.status)}>{item.status}</span>
@@ -119,53 +130,42 @@ export function ConfirmacaoStepShell({
         </div>
       </div>
 
-      <div className="premium-pill mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-        <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-          <Camera className="h-4 w-4 text-primary" />
-          Fotos anexadas: {fotos.length}
-        </p>
-      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5">
+          <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <Camera className="h-4 w-4 text-primary" />
+            Fotos anexadas
+          </p>
+          <p className="mt-3 text-sm text-slate-600">
+            {fotos.length > 0
+              ? `${fotos.length} imagem(ns) pronta(s) para seguir com o laudo.`
+              : "Nenhuma imagem anexada."}
+          </p>
+        </div>
 
-      <div className="premium-pill mt-4 rounded-[22px] border-2 border-[#4190ff] bg-[#eef5ff] p-5">
-        <div className="flex items-center gap-4">
-          <Image
-            src="/avatar.png"
-            alt={user.nome}
-            width={56}
-            height={56}
-            className="h-14 w-14 rounded-2xl object-cover"
-          />
-          <div className="min-w-0">
-            <p className="truncate text-[15px] font-black uppercase tracking-tight text-slate-900">
-              {user.nome}
-            </p>
-            <p className="mt-1 text-[15px] font-black uppercase tracking-tight text-slate-700">
-              N. CREA: {approverCrea} / CODIGO DO AVALIADOR: {avaliadorCode}
-            </p>
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p className="text-sm font-semibold text-slate-900">Avaliador responsável</p>
+          <div className="mt-4 flex items-center gap-4">
+            <Image
+              src="/avatar.png"
+              alt={user.nome}
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-2xl object-cover"
+            />
+            <div className="min-w-0">
+              <p className="truncate text-sm font-bold text-slate-900">{user.nome}</p>
+              <p className="mt-1 text-xs text-slate-500">CREA {approverCrea}</p>
+              <p className="mt-1 text-xs text-slate-500">
+                Código {avaliadorCode}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       <div
         className={`mt-4 rounded-2xl border p-4 ${
-          statusFinal === "REPROVADO"
-            ? "status-glow border-rose-200 bg-rose-50 text-rose-700"
-            : "border-primary/25 bg-primary/10 text-primary"
-        }`}
-      >
-        <p className="inline-flex items-center gap-2 text-sm font-semibold">
-          <CircleAlert className="h-4 w-4" />
-          Status final: {statusFinal}
-        </p>
-        <p className="mt-2 text-sm">
-          {statusFinal === "REPROVADO"
-            ? "Existe ao menos um item reprovado, entao o laudo sera salvo como reprovado."
-            : "Nenhum item foi reprovado, entao o laudo sera salvo como aprovado."}
-        </p>
-      </div>
-
-      <div
-        className={`premium-pill mt-4 rounded-2xl border p-4 ${
           pendingItems.length > 0
             ? "border-amber-200 bg-amber-50"
             : "border-emerald-200 bg-emerald-50"
@@ -189,7 +189,7 @@ export function ConfirmacaoStepShell({
             ))
           ) : (
             <p className="text-emerald-700">
-              A confirmacao final foi liberada. O laudo ja pode ser emitido.
+              A confirmação final foi liberada. O laudo já pode ser emitido.
             </p>
           )}
         </div>
@@ -199,8 +199,8 @@ export function ConfirmacaoStepShell({
         <PremiumSwitch
           checked={aceite}
           onCheckedChange={onAceiteChange}
-          label="Autorizacao de assinatura"
-          description="Confirmo as informacoes acima e autorizo utilizar minha assinatura digital no laudo emitido."
+          label="Autorização de assinatura"
+          description="Confirmo as informações acima e autorizo utilizar minha assinatura digital no laudo emitido."
         />
       </div>
 

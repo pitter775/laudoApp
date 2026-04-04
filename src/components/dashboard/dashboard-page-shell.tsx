@@ -8,34 +8,34 @@ export function DashboardPageShell() {
     <div className="space-y-8">
       <PageIntro
         eyebrow="Painel"
-        title="Visao geral da operacao"
-        description="Acompanhe laudos, retome fluxos e mantenha a rotina de emissao organizada em um unico painel."
+        title="Visão geral da operação"
+        description="Acompanhe laudos, retome fluxos e mantenha a rotina de emissão organizada em um único painel."
         icon={ChartColumnBig}
       />
 
       <div className="grid gap-4 lg:grid-cols-3">
         <PlaceholderPanel
           title="Laudos recentes"
-          description="Espaco para consultar emissao, status e proximos passos de cada laudo."
+          description="Espaço para consultar emissão, status e próximos passos de cada laudo."
           icon={FileSpreadsheet}
           items={[
-            "Data de emissao",
+            "Data de emissão",
             "Status aprovado ou reprovado",
-            "Acoes de visualizar e PDF",
+            "Ações de visualização e PDF",
           ]}
         />
         <PlaceholderPanel
-          title="Acoes rapidas"
+          title="Ações rápidas"
           description="Atalhos para iniciar um novo laudo ou retomar o que ficou em andamento."
           icon={Zap}
           items={["Novo laudo", "Continuar rascunho", "Atualizar listagem"]}
         />
         <PlaceholderPanel
           title="Indicadores"
-          description="Area pronta para filtros, resumo da operacao e leitura rapida do desempenho."
+          description="Área pronta para filtros, resumo da operação e leitura rápida do desempenho."
           icon={Activity}
           items={[
-            "Filtros por periodo",
+            "Filtros por período",
             "Busca por cliente",
             "Resumo de produtividade",
           ]}

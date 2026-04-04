@@ -28,14 +28,14 @@ export function AuthShell({ children }: AuthShellProps) {
               </Link>
               <div className="relative space-y-4 appear-fade-delay">
                 <p className="text-sm uppercase tracking-[0.24em] text-primary">
-                  Laudos tecnicos com fluxo controlado
+                  Laudos técnicos com fluxo controlado
                 </p>
                 <h1 className="max-w-md text-4xl font-semibold leading-tight">
-                  Emita laudos com mais padrao, clareza e agilidade.
+                  Emita laudos com mais padrão, clareza e agilidade.
                 </h1>
                 <p className="max-w-lg text-base leading-7 text-slate-300">
-                  O LAUDOPARTS organiza a emissao em etapas, centraliza imagens
-                  e mantem a operacao pronta para crescer com novos modulos e
+                  O LAUDOPARTS organiza a emissão em etapas, centraliza imagens
+                  e mantém a operação pronta para crescer com novos módulos e
                   PDF.
                 </p>
               </div>
@@ -46,7 +46,7 @@ export function AuthShell({ children }: AuthShellProps) {
                 <Workflow className="h-5 w-5 text-primary" />
                 <p className="mt-3 font-semibold text-white">Fluxo guiado</p>
                 <p className="mt-2">
-                  Cada etapa conduz o preenchimento e reduz erros na emissao.
+                  Cada etapa conduz o preenchimento e reduz erros na emissão.
                 </p>
               </div>
               <div className="premium-pill rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -58,9 +58,9 @@ export function AuthShell({ children }: AuthShellProps) {
               </div>
               <div className="premium-pill rounded-2xl border border-white/10 bg-white/5 p-4">
                 <FileText className="h-5 w-5 text-primary" />
-                <p className="mt-3 font-semibold text-white">PDF em evolucao</p>
+                <p className="mt-3 font-semibold text-white">PDF em evolução</p>
                 <p className="mt-2">
-                  Estrutura preparada para gerar PDF com anexos e validacoes.
+                  Estrutura preparada para gerar PDF com anexos e validações.
                 </p>
               </div>
             </div>

@@ -39,7 +39,7 @@ export function LoginFormShell() {
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "Nao foi possivel autenticar.",
+          : "Não foi possível autenticar.",
       );
     } finally {
       setIsSubmitting(false);
@@ -51,7 +51,7 @@ export function LoginFormShell() {
       <PageIntro
         eyebrow="Acesso seguro"
         title="Entrar"
-        description="Entre com seus dados para continuar a emissao e a gestao dos laudos."
+        description="Entre com seus dados para continuar a emissão e a gestão dos laudos."
         icon={LockKeyhole}
       />
 

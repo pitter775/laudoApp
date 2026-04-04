@@ -119,7 +119,7 @@ export function LaudoWizardShell() {
         setError(
           bootstrapError instanceof Error
             ? bootstrapError.message
-            : "Nao foi possivel carregar os dados iniciais.",
+            : "Não foi possível carregar os dados iniciais.",
         );
       } finally {
         setIsLoadingPecas(false);
@@ -276,7 +276,7 @@ export function LaudoWizardShell() {
       setError(
         loadError instanceof Error
           ? loadError.message
-          : "Nao foi possivel carregar as analises da peca.",
+          : "Não foi possível carregar as análises da peça.",
       );
     } finally {
       setIsLoadingAnalises(false);
@@ -307,7 +307,7 @@ export function LaudoWizardShell() {
       setError(
         uploadError instanceof Error
           ? uploadError.message
-          : "Nao foi possivel processar as imagens.",
+          : "Não foi possível processar as imagens.",
       );
     }
   }
@@ -332,7 +332,7 @@ export function LaudoWizardShell() {
 
   async function handleSubmit() {
     if (!sessionUser) {
-      setError("Nenhum usuario autenticado foi encontrado na sessao.");
+      setError("Nenhum usuário autenticado foi encontrado na sessão.");
       return;
     }
 
@@ -361,7 +361,7 @@ export function LaudoWizardShell() {
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "Nao foi possivel emitir o laudo.",
+          : "Não foi possível emitir o laudo.",
       );
     } finally {
       setIsSubmitting(false);
@@ -459,7 +459,7 @@ export function LaudoWizardShell() {
           onBack={() => goToStep(1)}
           onNext={() => {
             if (!canAdvanceFromAvaliacao()) {
-              setError("Avalie todas as analises para continuar.");
+              setError("Avalie todas as análises para continuar.");
               return;
             }
 
@@ -488,7 +488,7 @@ export function LaudoWizardShell() {
       <ConfirmacaoStepShell
         cliente={cliente}
         peca={peca}
-        pecaNome={selectedPeca?.nome ?? "Peca nao identificada"}
+        pecaNome={selectedPeca?.nome ?? "Peça não identificada"}
         user={sessionUser ?? { id: "", nome: "", email: "" }}
         itens={itens}
         fotos={fotos}
@@ -516,7 +516,7 @@ export function LaudoWizardShell() {
               Meus Laudos &gt; Emitir novo laudo
             </p>
             <h1 className="mt-2 text-[26px] font-black uppercase tracking-tight text-slate-900">
-              Emissao de novo laudo
+              Emissão de novo laudo
             </h1>
           </div>
         </div>

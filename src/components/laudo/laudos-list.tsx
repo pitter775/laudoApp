@@ -42,7 +42,7 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
           setError(
             loadError instanceof Error
               ? loadError.message
-              : "Nao foi possivel carregar os laudos emitidos.",
+              : "Não foi possível carregar os laudos emitidos.",
           );
         }
       } finally {
@@ -78,7 +78,7 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
       <div className="premium-panel rounded-[28px] border border-rose-200 bg-white px-6 py-14 text-center">
         <AlertCircle className="mx-auto h-8 w-8 text-rose-500" />
         <p className="mt-4 text-sm font-semibold text-slate-900">
-          Nao foi possivel carregar os laudos
+          Não foi possível carregar os laudos
         </p>
         <p className="mt-2 text-sm text-slate-500">{error}</p>
       </div>
@@ -117,7 +117,7 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
             <div className="grid gap-3 md:grid-cols-2 md:gap-x-8 md:gap-y-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-                  Numero do laudo
+                  Número do laudo
                 </p>
                 <p className="mt-1 text-sm font-bold text-slate-900">
                   {pdfService.buildNumeroLaudo(laudo.id)}
@@ -126,7 +126,7 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
 
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-                  Data de emissao
+                  Data de emissão
                 </p>
                 <p className="mt-1 text-sm font-medium text-slate-700">
                   {pdfService.formatDate(laudo.createdAt)}
@@ -144,7 +144,7 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
 
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-                  Peca
+                  Peça
                 </p>
                 <p className="mt-1 text-sm font-medium text-slate-700">
                   {laudo.pecaNome}

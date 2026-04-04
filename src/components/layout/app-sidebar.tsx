@@ -94,7 +94,7 @@ export function AppSidebar() {
                       <p>{emitirItem.label}</p>
                     </div>
                     <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
-                      Nova emissao
+                      Nova emissão
                     </p>
                   </div>
                   <div
@@ -122,7 +122,7 @@ export function AppSidebar() {
                   <p>{capacitacaoItem.label}</p>
                 </div>
                 <p className="mt-1 text-sm font-medium normal-case tracking-normal text-slate-400">
-                  Em breve no mesmo padrao visual do restante do sistema.
+                  Em breve no mesmo padrão visual do restante do sistema.
                 </p>
               </div>
             </div>
