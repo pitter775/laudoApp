@@ -1,6 +1,6 @@
 "use client";
 
-import { History, Send, SquarePen } from "lucide-react";
+import { Plus, SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -85,6 +85,7 @@ export function LaudoWizardShell() {
   const [isLoadingPecas, setIsLoadingPecas] = useState(true);
   const [, setIsLoadingAnalises] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNewLaudoModalOpen, setIsNewLaudoModalOpen] = useState(false);
 
   const selectedPeca = useMemo(
     () => pecas.find((item) => item.id === peca.pecaId) ?? null,
@@ -96,6 +97,24 @@ export function LaudoWizardShell() {
     () => itens.length > 0 && itens.every((item) => item.status === "APROVADO"),
     [itens],
   );
+  const hasActiveDraft = useMemo(() => {
+    const clienteFilled = Object.values(cliente).some(
+      (fieldValue) => fieldValue.trim().length > 0,
+    );
+    const pecaFilled = Object.values(peca).some(
+      (fieldValue) => fieldValue.trim().length > 0,
+    );
+
+    return (
+      currentStep > 0 ||
+      visitedSteps.length > 1 ||
+      clienteFilled ||
+      pecaFilled ||
+      itens.length > 0 ||
+      fotos.length > 0 ||
+      aceite
+    );
+  }, [aceite, cliente, currentStep, fotos.length, itens.length, peca, visitedSteps.length]);
 
   function goToStep(nextStep: number) {
     setStepDirection(nextStep >= currentStep ? "forward" : "backward");
@@ -330,6 +349,22 @@ export function LaudoWizardShell() {
     }
   }
 
+  function handleStartNewLaudo() {
+    if (hasActiveDraft) {
+      setIsNewLaudoModalOpen(true);
+      return;
+    }
+
+    resetWizard();
+    router.replace("/laudos/novo");
+  }
+
+  function handleDeleteDraftAndRestart() {
+    resetWizard();
+    setIsNewLaudoModalOpen(false);
+    router.replace("/laudos/novo");
+  }
+
   async function handleSubmit() {
     if (!sessionUser) {
       setError("Nenhum usuário autenticado foi encontrado na sessão.");
@@ -527,17 +562,11 @@ export function LaudoWizardShell() {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            onClick={handleStartNewLaudo}
             className="premium-pill premium-button-secondary inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-secondary shadow-sm hover:text-secondary-hover"
           >
-            <History className="h-4 w-4" />
-            History
-          </button>
-          <button
-            type="button"
-            className="premium-pill premium-button-secondary inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-secondary shadow-sm hover:text-secondary-hover"
-          >
-            <Send className="h-4 w-4" />
-            Invite
+            <Plus className="h-4 w-4" />
+            Novo laudo
           </button>
         </div>
       </div>
@@ -607,6 +636,50 @@ export function LaudoWizardShell() {
           </div>
         </div>
       </div>
+
+      {isNewLaudoModalOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4 py-6 backdrop-blur-[2px]">
+          <div className="w-full max-w-lg rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
+            <div className="flex items-start gap-4">
+              <div className="premium-pill flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/8 text-primary">
+                <Plus className="h-5 w-5" />
+              </div>
+
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+                  Novo laudo
+                </p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950">
+                  Existe um preenchimento em andamento
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-slate-600">
+                  Voce pode continuar de onde parou ou apagar o preenchimento atual
+                  para iniciar um novo laudo do zero.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={() => setIsNewLaudoModalOpen(false)}
+                className="premium-button inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-hover"
+              >
+                Continuar preenchimento
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDeleteDraftAndRestart}
+                className="premium-button-secondary inline-flex items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100"
+              >
+                <Trash2 className="h-4 w-4" />
+                Deletar e iniciar novo laudo
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -118,8 +118,22 @@ export function AvaliacaoStepShell({
   const celebrationTimeoutRef = useRef<number | null>(null);
   const hasCelebratedRef = useRef(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const allApproved =
     itens.length > 0 && itens.every((item) => item.status === "APROVADO");
+
+  useEffect(() => {
+    function syncViewport() {
+      setIsMobileViewport(window.innerWidth < 640);
+    }
+
+    syncViewport();
+    window.addEventListener("resize", syncViewport);
+
+    return () => {
+      window.removeEventListener("resize", syncViewport);
+    };
+  }, []);
 
   useEffect(() => {
     if (!showCelebration) {
@@ -222,6 +236,10 @@ export function AvaliacaoStepShell({
   function handleStatusSelect(analiseId: string, status: AvaliacaoStatus) {
     onStatusChange(analiseId, status);
 
+    if (isMobileViewport) {
+      return;
+    }
+
     const nextAllApproved =
       status === "APROVADO" &&
       itens.length > 0 &&
@@ -295,12 +313,14 @@ export function AvaliacaoStepShell({
         </button>
 
         <div className="relative w-full overflow-hidden sm:w-auto sm:overflow-visible">
-          <canvas
-            ref={canvasRef}
-            className={`pointer-events-none absolute left-1/2 bottom-[calc(100%-50px)] z-10 hidden -translate-x-1/2 sm:block ${
-              showCelebration ? "block" : "hidden"
-            }`}
-          />
+          {!isMobileViewport ? (
+            <canvas
+              ref={canvasRef}
+              className={`pointer-events-none absolute left-1/2 bottom-[calc(100%-50px)] z-10 -translate-x-1/2 ${
+                showCelebration ? "block" : "hidden"
+              }`}
+            />
+          ) : null}
 
           <button
             type="button"
