@@ -47,7 +47,7 @@ export function FotosStepShell({
       </label>
 
       {fotos.length > 0 ? (
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="mt-5 grid gap-3 overflow-x-hidden md:grid-cols-2">
           {fotos.map((foto) => (
             <div
               key={foto.id}

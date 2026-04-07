@@ -114,6 +114,26 @@ export function LaudosList({ refreshKey = 0 }: LaudosListProps) {
           className="premium-panel rounded-[26px] border border-slate-200 bg-white px-5 py-5"
         >
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="grid grid-cols-2 gap-3 md:hidden">
+              <div className="hidden md:block">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                  Numero do laudo
+                </p>
+                <p className="mt-1 text-sm font-bold text-slate-900">
+                  {pdfService.buildNumeroLaudo(laudo.id)}
+                </p>
+              </div>
+
+              <div className="hidden md:block">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                  Data de emissao
+                </p>
+                <p className="mt-1 text-sm font-medium text-slate-700">
+                  {pdfService.formatDate(laudo.createdAt)}
+                </p>
+              </div>
+            </div>
+
             <div className="grid gap-3 md:grid-cols-2 md:gap-x-8 md:gap-y-4">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">

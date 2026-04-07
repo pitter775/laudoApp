@@ -44,6 +44,7 @@ const initialPeca: DadosPeca = {
 };
 
 const WIZARD_STORAGE_KEY = "laudoparts:laudo-wizard-draft";
+const WIZARD_COMPLETED_KEY = "laudoparts:laudo-wizard-completed";
 
 function getStatusFinal(itens: LaudoItemDraft[]) {
   return itens.some((item) => item.status === "REPROVADO")
@@ -155,6 +156,7 @@ export function LaudoWizardShell() {
 
     if (searchParams.get("fresh") === "1") {
       window.sessionStorage.removeItem(WIZARD_STORAGE_KEY);
+      window.sessionStorage.removeItem(WIZARD_COMPLETED_KEY);
       resetWizard();
       router.replace("/laudos/novo");
       return;
@@ -163,6 +165,7 @@ export function LaudoWizardShell() {
     const storedDraft = window.sessionStorage.getItem(WIZARD_STORAGE_KEY);
 
     if (!storedDraft) {
+      window.sessionStorage.removeItem(WIZARD_COMPLETED_KEY);
       return;
     }
 
@@ -346,6 +349,7 @@ export function LaudoWizardShell() {
 
     if (typeof window !== "undefined") {
       window.sessionStorage.removeItem(WIZARD_STORAGE_KEY);
+      window.sessionStorage.removeItem(WIZARD_COMPLETED_KEY);
     }
   }
 
@@ -375,6 +379,10 @@ export function LaudoWizardShell() {
     setIsSubmitting(true);
 
     try {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(WIZARD_COMPLETED_KEY, "1");
+      }
+
       const laudoId = await laudosService.create({
         userId: sessionUser.id,
         dadosCliente: cliente,
@@ -393,6 +401,10 @@ export function LaudoWizardShell() {
       const pdfUrl = `/laudos/${laudoId}/pdf`;
       router.push(pdfUrl);
     } catch (submitError) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(WIZARD_COMPLETED_KEY);
+      }
+
       setError(
         submitError instanceof Error
           ? submitError.message

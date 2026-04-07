@@ -29,11 +29,18 @@ export function AppSidebar({
     pathname === "/laudos/novo";
 
   const emitirActive = pathname === "/laudos/novo";
+  const emitirHref =
+    typeof window !== "undefined" &&
+    window.sessionStorage.getItem("laudoparts:laudo-wizard-completed") === "1"
+      ? "/laudos/novo?fresh=1"
+      : "/laudos/novo";
 
   return (
     <aside
       className={`fixed inset-y-0 left-0 z-40 flex w-[300px] shrink-0 flex-col overflow-y-auto border-r border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#fbfdff_52%,#f7fbff_100%)] transition-transform duration-200 ease-out ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
+        isOpen
+          ? "translate-x-0"
+          : "-translate-x-[calc(100%+24px)] pointer-events-none"
       } lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0`}
     >
       <div className="px-6 py-6">
@@ -98,7 +105,7 @@ export function AppSidebar({
 
             {emitirItem ? (
               <Link
-                href={emitirItem.href}
+                href={emitirHref}
                 onClick={onClose}
                 className={`group mt-2 block rounded-[20px] px-6 py-4 text-[14px] font-bold uppercase tracking-wide transition premium-button-secondary ${
                   emitirActive

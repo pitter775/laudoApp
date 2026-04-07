@@ -267,7 +267,7 @@ export function AvaliacaoStepShell({
       title="Avaliacao"
       description="As analises abaixo foram carregadas dinamicamente da tabela pecas_analises."
     >
-      <div className="space-y-3 appear-fade">
+      <div className="space-y-3 overflow-x-hidden appear-fade">
         {itens.map((item) => (
           <div
             key={item.analiseId}
@@ -302,17 +302,17 @@ export function AvaliacaoStepShell({
         ))}
       </div>
 
-      <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-6 flex items-center justify-between gap-4">
         <button
           type="button"
           onClick={onBack}
-          className="premium-button-secondary inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-200 sm:w-auto"
+          className="premium-button-secondary inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-200"
         >
           <ArrowLeft className="h-4 w-4" />
           Voltar
         </button>
 
-        <div className="relative w-full overflow-hidden sm:w-auto sm:overflow-visible">
+        <div className="relative">
           {!isMobileViewport ? (
             <canvas
               ref={canvasRef}
@@ -325,7 +325,7 @@ export function AvaliacaoStepShell({
           <button
             type="button"
             onClick={onNext}
-            className={`premium-button inline-flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition sm:w-auto ${
+            className={`premium-button inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition ${
               allApproved
                 ? "status-glow bg-emerald-500 hover:bg-emerald-600"
                 : "bg-primary hover:bg-primary-hover"
