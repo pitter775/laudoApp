@@ -14,6 +14,11 @@ export type CreateLaudoPayload = {
   pecaId: string;
 };
 
+type SupabaseErrorLike = {
+  code?: string;
+  message?: string;
+};
+
 async function getRequiredSession() {
   const session = await authService.getSession();
 
@@ -22,6 +27,74 @@ async function getRequiredSession() {
   }
 
   return session;
+}
+
+function shouldFallbackToDirectInsert(error: SupabaseErrorLike) {
+  const message = error.message?.toLowerCase() ?? "";
+
+  return (
+    error.code === "PGRST202" ||
+    message.includes("could not find the function") ||
+    message.includes("function public.emitir_laudo")
+  );
+}
+
+async function createLaudoDirectly(payload: EmitirLaudoPayload) {
+  const { data: laudo, error: laudoError } = await supabaseClient
+    .from("laudos")
+    .insert({
+      user_id: payload.userId,
+      dados_cliente: payload.dadosCliente,
+      dados_peca: payload.dadosPeca,
+      peca_id: payload.pecaId,
+      status: payload.status,
+    })
+    .select("id")
+    .single<{ id: string }>();
+
+  if (laudoError) {
+    throw laudoError;
+  }
+
+  const laudoId = laudo.id;
+
+  if (payload.itens.length > 0) {
+    const { error: itensError } = await supabaseClient
+      .from("laudo_itens")
+      .insert(
+        payload.itens.map((item) => ({
+          laudo_id: laudoId,
+          analise_id: item.analiseId,
+          status: item.status,
+        })),
+      );
+
+    if (itensError) {
+      await supabaseClient.from("laudos").delete().eq("id", laudoId);
+      throw itensError;
+    }
+  }
+
+  const anexos = payload.anexos.filter((anexo) => anexo.imagemBase64.trim());
+
+  if (anexos.length > 0) {
+    const { error: anexosError } = await supabaseClient
+      .from("laudo_anexos")
+      .insert(
+        anexos.map((anexo) => ({
+          laudo_id: laudoId,
+          imagem_base64: anexo.imagemBase64,
+        })),
+      );
+
+    if (anexosError) {
+      await supabaseClient.from("laudo_itens").delete().eq("laudo_id", laudoId);
+      await supabaseClient.from("laudos").delete().eq("id", laudoId);
+      throw anexosError;
+    }
+  }
+
+  return laudoId;
 }
 
 export const laudosService = {
@@ -166,6 +239,10 @@ export const laudosService = {
     });
 
     if (error) {
+      if (shouldFallbackToDirectInsert(error)) {
+        return createLaudoDirectly(payload);
+      }
+
       throw error;
     }
 
