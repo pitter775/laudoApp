@@ -41,7 +41,7 @@ export function AppSidebar({
         isOpen
           ? "translate-x-0"
           : "-translate-x-[calc(100%+24px)] pointer-events-none"
-      } lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0`}
+      } lg:pointer-events-auto lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:translate-x-0`}
     >
       <div className="px-6 py-6">
         <div className="mb-3 flex items-center justify-end lg:hidden">
@@ -78,7 +78,7 @@ export function AppSidebar({
             <Link
               href={laudosItem.href}
               onClick={onClose}
-              className={`group block rounded-[22px] px-4 py-4 transition premium-button-secondary ${
+              className={`group block cursor-pointer rounded-[22px] px-4 py-4 transition premium-button-secondary ${
                 pathname === "/laudos"
                   ? "premium-pill border border-white/90 bg-white text-slate-950"
                   : "text-slate-600 hover:bg-white/90 hover:text-slate-950"
@@ -107,7 +107,7 @@ export function AppSidebar({
               <Link
                 href={emitirHref}
                 onClick={onClose}
-                className={`group mt-2 block rounded-[20px] px-6 py-4 text-[14px] font-bold uppercase tracking-wide transition premium-button-secondary ${
+                className={`group mt-2 block cursor-pointer rounded-[20px] px-6 py-4 text-[14px] font-bold uppercase tracking-wide transition premium-button-secondary ${
                   emitirActive
                     ? "premium-pill border border-white/90 bg-white text-primary"
                     : "text-slate-500 hover:bg-white/80 hover:text-secondary"
