@@ -61,8 +61,6 @@ export const authService = {
       .from("usuarios")
       .select("id, nome, email, senha_hash, ativo")
       .eq("email", payload.email.trim().toLowerCase())
-      .eq("senha_hash", senhaHash)
-      .eq("ativo", true)
       .maybeSingle<UsuarioRecord>();
 
     if (error) {
@@ -70,7 +68,15 @@ export const authService = {
     }
 
     if (!data) {
-      throw new Error("Email ou senha inválidos.");
+      throw new Error("Usuario nao encontrado no banco configurado.");
+    }
+
+    if (!data.ativo) {
+      throw new Error("Usuario admin esta inativo no banco.");
+    }
+
+    if (data.senha_hash !== senhaHash) {
+      throw new Error("Senha diferente do hash cadastrado no banco.");
     }
 
     const user = {
