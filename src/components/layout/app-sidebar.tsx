@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ClipboardList,
-  GraduationCap,
-  SquarePen,
-  Store,
-  X,
-} from "lucide-react";
+import { ClipboardList, GraduationCap, SquarePen, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,9 +21,6 @@ export function AppSidebar({
   const emitirItem = appNavigation.find((item) => item.href === "/laudos/novo");
   const capacitacaoItem = appNavigation.find(
     (item) => item.href === "/capacitacao",
-  );
-  const mercadoLivreItem = appNavigation.find(
-    (item) => item.href === "/integracoes/mercado-livre",
   );
 
   const laudosActive =
@@ -145,37 +136,6 @@ export function AppSidebar({
               </Link>
             ) : null}
           </div>
-        ) : null}
-
-        {mercadoLivreItem ? (
-          <Link
-            href={mercadoLivreItem.href}
-            onClick={onClose}
-            className={`group block rounded-[24px] border px-5 py-5 text-[15px] font-bold uppercase tracking-wide transition premium-button-secondary ${
-              pathname === mercadoLivreItem.href
-                ? "border-primary/20 bg-white text-slate-950 shadow-[0_18px_42px_rgba(0,194,184,0.09)]"
-                : "border-transparent text-slate-600 hover:border-slate-200 hover:bg-white/85 hover:text-slate-950"
-            }`}
-          >
-            <div className="flex items-start gap-3">
-              <div
-                className={`mt-0.5 h-3.5 w-3.5 rounded-full transition ${
-                  pathname === mercadoLivreItem.href
-                    ? "bg-primary shadow-[0_0_0_5px_rgba(0,194,184,0.12)]"
-                    : "bg-secondary/20 group-hover:bg-secondary/35"
-                }`}
-              />
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <Store className="h-4 w-4 text-primary" />
-                  <p>{mercadoLivreItem.label}</p>
-                </div>
-                <p className="mt-1 text-sm font-medium normal-case tracking-normal text-slate-400">
-                  Contrato da loja.
-                </p>
-              </div>
-            </div>
-          </Link>
         ) : null}
 
         {capacitacaoItem ? (
